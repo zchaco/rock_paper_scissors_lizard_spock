@@ -9,6 +9,7 @@
 <body>
 <script>
 
+    alert("Welcome to Rock Paper Scissors Lizard Spock!\n The Game where nothing makes sense and everything is copyrighted")
     game();
 
     function game(){
@@ -17,29 +18,45 @@
         
         for (i=0; i <5; i++){
             let playerChoice = prompt("Choose one of the following: Rock, Paper, Scissors, Lizard, Spock");
+            if(!validatePrompt(playerChoice)){
+                console.log("Please enter a valid option");
+                continue;
+            }
+
             let computerChoice = computerPlay();
             let winner = playRound(playerChoice, computerChoice);
-            console.log("You chose: " + playerChoice + ". Computer Chose: " + computerChoice + ". " + winner);
-            changeScore(playerScore,computerScore,winner);
+            if(winner == 0){
+                console.log("You chose: " + playerChoice + ". Computer Chose: " + computerChoice + ". " + "Its a tie!");
+            }else if (winner == -1){
+                computerScore++;
+                console.log("You chose: " + playerChoice + ". Computer Chose: " + computerChoice + ". " + "Computer Wins!");
+
+            }else{
+                playerScore++;
+                console.log("You chose: " + playerChoice + ". Computer Chose: " + computerChoice + ". " + "Player Wins!");
+
+            }            
         }
 
-        console.log ("Final Score: Player: " + playerScore + ". Computer: " + computerScore);
-
-    }
-
-    function changeScore(playerScore,computerScore,winner){
-        if(winner == "tie"){
-            return;
-        }
-        else if (winner = "Computer"){
-            return computerScore++;
-        }
-         else{
-            return playerScore++;
-        }
+        console.log("Final Score: Player: " + playerScore + " Computer: " + computerScore)
 
     }
-    
+
+    function validatePrompt(playerChoice){
+        let lower = playerChoice.toLowerCase();
+        let upperCaseFirstLetter = lower.charAt(0).toUpperCase();
+        let properFormattedChoice = upperCaseFirstLetter + lower.slice(1);
+        if(properFormattedChoice == "Rock" || 
+        properFormattedChoice == "Scissors" || 
+        properFormattedChoice== "Paper" || 
+        properFormattedChoice == "Lizard" ||
+        properFormattedChoice == "Spock"){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
     function playRound(playerChoice, computerChoice){
        
